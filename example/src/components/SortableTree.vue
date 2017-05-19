@@ -4,7 +4,7 @@
     <ul v-if="hasChildren(data)">
       <li v-for="item in data.children" :class="{'parent-li': hasChildren(item)}">
         <sortable-tree-item :item="item" :attr="attr" :dragInfo="dragInfo">
-          <sortable-tree :data="item"></sortable-tree>
+          <sortable-tree :data="item" :attr="attr" :dragInfo="dragInfo"></sortable-tree>
         </sortable-tree-item>
       </li>
     </ul>

@@ -1,5 +1,6 @@
 <template>
-  <div class="sortable-tree-item-drag" :draggable="item[attr]" @dragstart.stop="dragStart(item, $event)" @dragover.prevent @drop.stop="drop" @dragend.stop.prevent="dragEnd">
+  <div class="sortable-tree-item-drag" :draggable="item[attr]" @dragstart.stop="dragStart(item, $event)" @dragover.prevent @dragenter.stop="dragEnter(item, $event)"
+       @dragleave.stop="dragLeave(item, $event)" @drop.stop="drop" @dragend.stop.prevent="dragEnd">
     <slot :item="item"></slot>
   </div>
 </template>
@@ -14,14 +15,23 @@ export default {
     }
   },
   methods: {
+    clearBgColor () { // 清理样式
+      this.$el.style.backgroundColor = ''
+    },
     dragStart (data, event) { // 被拖动元素
       this.dragObj.vm = event.target
       this.dragObj.data = data
-      event.target.style.background = 'silver'
+    },
+    dragEnter (data, event) { // 作用在目标元素
+      console.log('dragEnter', data, this.dragObj.vm)
+      this.dragObj.vm.classList.add('droper')
+    },
+    dragLeave (data, event) { // 作用在目标元素
+      console.log('dragLeave', data)
     },
     // 在ondragover中一定要执行preventDefault()，否则ondrop事件不会被触发。
     drop (event) { // 目标元素
-//      console.log(this.dragObj, event.target, this.item)
+      console.log(this.dragObj, event.target, this.item)
     },
     dragEnd () {
     }
@@ -32,4 +42,7 @@ export default {
 </script>
 
 <style>
+  .droper {
+    background: #EFEEEF;
+  }
 </style>
