@@ -1,8 +1,8 @@
 <template>
   <div class="sortable-tree">
     <span>o {{data[attr]}}</span>
-    <ul>
-      <li v-for="item in data.children" v-if="hasChildren(item)">
+    <ul v-if="hasChildren(data)">
+      <li v-for="item in data.children" :class="{'parent-li': hasChildren(item)}">
         <sortable-tree-item :item="item" :attr="attr" :dragInfo="dragInfo">
           <sortable-tree :data="item"></sortable-tree>
         </sortable-tree-item>
@@ -70,14 +70,39 @@ export default {
   li {
     position: relative;
     padding: 10px 0 0 24px;
-
-    &.parent-li {
-      border: 1px solid grey;
-    }
   }
 }
 /* 位置相关 */
 .sortable-tree {
+  li {
+    position: relative;
 
+    &:before, &:after {
+      position: absolute;
+      content: '';
+    }
+    &:before {
+      width: 24px;
+      height: 100%;
+      left: 0;
+      top: -10px;
+      /*background: red;*/
+      border-left: 1px solid #999;
+    }
+    &:after {
+      width: 22px;
+      height: 20px;
+      top: 22px;
+      left: 0;
+      border-top: 1px solid #999;
+    }
+    &.parent-li:last-child:before {
+      width: 24px;
+      height: 32px; // 32为1个li的高度
+      left: 0;
+      top: -10px;
+      border-left: 1px solid #999;
+    }
+  }
 }
 </style>
