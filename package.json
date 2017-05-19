@@ -1,0 +1,19 @@
+{
+  "name": "vue-sortable-tree",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wuyuedefeng/vue-sortable-tree.git"
+  },
+  "author": "wuyuedefeng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wuyuedefeng/vue-sortable-tree/issues"
+  },
+  "homepage": "https://github.com/wuyuedefeng/vue-sortable-tree#readme"
+}
