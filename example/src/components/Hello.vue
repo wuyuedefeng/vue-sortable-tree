@@ -11,39 +11,42 @@ export default {
   template: '#sortable-child-tpl',
   data () {
     return {
-      treeData: [
-        { name: '1',
-          children: [
-            { name: '1-1' },
-            { name: '1-2',
-              children: [
-                { name: '1-2-1' }
-              ]
-            },
-            { name: '1-3' },
-            { name: '1-4',
-              children: [
-                { name: '1-4-1',
-                  children: [
-                    { name: '1-4-1-1',
-                      children: [
-                        { name: '1-4-1-1-1' }
-                      ]
-                    }
-                  ]
-                },
-                { name: '1-4-2' }
-              ]
-            }
-          ]
-        },
-        {
-          name: '2',
-          children: [
-            { name: '2-1' }
-          ]
-        }
-      ]
+      treeData: {
+        name: 'root',
+        children: [
+          { name: '1',
+            children: [
+              { name: '1-1' },
+              { name: '1-2',
+                children: [
+                  { name: '1-2-1' }
+                ]
+              },
+              { name: '1-3' },
+              { name: '1-4',
+                children: [
+                  { name: '1-4-1',
+                    children: [
+                      { name: '1-4-1-1',
+                        children: [
+                          { name: '1-4-1-1-1' }
+                        ]
+                      }
+                    ]
+                  },
+                  { name: '1-4-2' }
+                ]
+              }
+            ]
+          },
+          {
+            name: '2',
+            children: [
+              { name: '2-1' }
+            ]
+          }
+        ]
+      }
     }
   },
   components: {

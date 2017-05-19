@@ -1,15 +1,13 @@
 <template>
-  <div>
-    <div v-for="item in data">
-      <sortable-tree-item :item="item" :attr="attr" :dragInfo="dragInfo">
-        <div class="sortable-tree-item" :class="{'left-border': item.children && item.children.length}">
-          <span>{{item[attr]}}</span>
-          <div class="sortable-tree-item-children">
-            <sortable-tree :data="item.children" v-if="item.children && item.children.length"></sortable-tree>
-          </div>
-        </div>
-      </sortable-tree-item>
-    </div>
+  <div class="sortable-tree">
+    <span>o {{data[attr]}}</span>
+    <ul>
+      <li v-for="item in data.children" v-if="hasChildren(item)">
+        <sortable-tree-item :item="item" :attr="attr" :dragInfo="dragInfo">
+          <sortable-tree :data="item"></sortable-tree>
+        </sortable-tree-item>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -19,7 +17,7 @@ export default {
   name: 'SortableTree',
   props: {
     data: {
-      type: Array
+      type: Object
     },
     attr: {
       type: String,
@@ -40,6 +38,9 @@ export default {
     }
   },
   methods: {
+    hasChildren (item) {
+      return item.children && item.children.length
+    }
   },
   components: {
     [SortableTreeItem.name]: SortableTreeItem
@@ -48,26 +49,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sortable-tree-item {
-  position: relative;
-  display: list-item;
-  list-style: none;
-  padding-left: 10px;
+.sortable-tree {
+  font-size: 16px;
 
-  &:before {
-    border-left: 1px solid #999;
-    content: '\f147';
-    position: absolute;
-    left: -8px;
+  ul, li {
+    margin: 0;
+    padding: 0;
   }
 
-  & > span {
-    border-bottom: 1px dashed grey;
+  ul {
+    position: relative;
+    display: list-item;
+    list-style: none;
+    &:empty {
+      width: 0;
+      height: 0;
+    }
   }
 
-  .sortable-tree-item-children {
-    margin-left: 2em;
+  li {
+    position: relative;
+    padding: 10px 0 0 24px;
+
+    &.parent-li {
+      border: 1px solid grey;
+    }
   }
 }
+/* 位置相关 */
+.sortable-tree {
 
+}
 </style>
