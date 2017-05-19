@@ -1,5 +1,5 @@
 <template>
-  <div class="sortable-tree" :draggable="item[attr]" @dragstart.stop="dragStart(item, $event)" @dragover.prevent @drop.stop="drop" @dragend.stop.prevent="dragEnd">
+  <div class="sortable-tree-item-drag" :draggable="item[attr]" @dragstart.stop="dragStart(item, $event)" @dragover.prevent @drop.stop="drop" @dragend.stop.prevent="dragEnd">
     <slot :item="item"></slot>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default {
     },
     // 在ondragover中一定要执行preventDefault()，否则ondrop事件不会被触发。
     drop (event) { // 目标元素
-      console.log(this.dragObj, event.target, this.item)
+//      console.log(this.dragObj, event.target, this.item)
     },
     dragEnd () {
     }
