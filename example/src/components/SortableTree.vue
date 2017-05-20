@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 export default {
   name: 'SortableTree',
   props: {
@@ -109,7 +110,16 @@ export default {
       let index = this.dragObj.parentData.children.indexOf(this.dragObj.data)
       this.dragObj.parentData.children.splice(index, 1)
       // 拖入空节点，成其兄弟（使用 splice 插入节点）
-      this.parentData.children.splice(this.idx / 2, 0, this.dragObj.data)
+      console.log(this.data[this.attr])
+      if (!this.data[this.attr]) {
+        return this.parentData.children.splice(this.idx / 2, 0, this.dragObj.data)
+      }
+      console.log('else')
+      // 拖入普通节点，成为其子
+      if (!this.data.children) {
+        Vue.set(this.data, 'children', [])
+      } // 须用 $set 引入双向绑定
+      this.data.children.push(this.dragObj.data)
     },
     dragEnd () {
     }
