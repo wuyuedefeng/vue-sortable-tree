@@ -17,36 +17,6 @@ export default {
   computed: {
   },
   methods: {
-    calcStatus () {
-      let tItem = this.item
-      let equalParent = null
-      let equalItemChild = null
-      let equalDragChild = null
-      while (tItem.$parent) {
-        let tDrag = this.dragObj.data
-        while (tDrag.$parent) {
-          if (tItem.$parent === tDrag.$parent) {
-            equalParent = tItem.$parent
-            equalItemChild = tItem
-            equalDragChild = tDrag
-            break
-          } else {
-            tDrag = tDrag.$parent
-          }
-        }
-        if (equalParent) {
-          break
-        } else {
-          tItem = tItem.$parent
-        }
-      }
-      return {
-        isToFront: equalParent.children.indexOf(equalItemChild) <= equalParent.children.indexOf(equalDragChild),
-        equalParent,
-        equalItemChild,
-        equalDragChild
-      }
-    },
     dragStart () { // 被拖动元素
       this.dragObj.vm = this.$el
       this.dragObj.data = this.item
