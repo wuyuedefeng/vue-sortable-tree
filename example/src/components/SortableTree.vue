@@ -1,5 +1,5 @@
 <template>
-  <div class="sortable-tree" :class="{'empty-node': data[attr]}" :draggable="data[attr]" @dragstart.stop="dragStart()" @dragover.prevent @dragenter.stop.prevent="dragEnter()"
+  <div class="sortable-tree" :draggable="data[attr]" @dragstart.stop="dragStart()" @dragover.stop.prevent @dragenter.stop.prevent="dragEnter()"
        @dragleave.stop="dragLeave()" @drop.stop="drop" @dragend.stop.prevent="dragEnd">
     <div class="content">
       <span>{{data[attr]}}</span>
@@ -71,7 +71,6 @@ export default {
       let data = this.data
       while (data) {
         if (data === this.dragObj.data) {
-          console.log(true)
           return true
         }
         data = data.$parent
@@ -95,7 +94,6 @@ export default {
     dragEnter () { // 作用在目标元素
       this.dragObj.vm.classList.add('draging')
       if (!this.isAllowToDrop) return
-//      console.log(this.$el)
       this.$el.classList.add('droper')
     },
     dragLeave (data) { // 作用在目标元素
@@ -110,11 +108,9 @@ export default {
       let index = this.dragObj.parentData.children.indexOf(this.dragObj.data)
       this.dragObj.parentData.children.splice(index, 1)
       // 拖入空节点，成其兄弟（使用 splice 插入节点）
-      console.log(this.data[this.attr])
       if (!this.data[this.attr]) {
         return this.parentData.children.splice(this.idx / 2, 0, this.dragObj.data)
       }
-      console.log('else')
       // 拖入普通节点，成为其子
       if (!this.data.children) {
         Vue.set(this.data, 'children', [])
@@ -138,7 +134,6 @@ export default {
 <style lang="scss" scoped>
 .sortable-tree {
   font-size: 16px;
-  overflow: hidden;
 
   .content {
     min-height: 10px;
