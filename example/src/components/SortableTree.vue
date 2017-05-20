@@ -1,12 +1,10 @@
 <template>
-  <div class="sortable-tree">
-    <span>o {{data[attr]}} - {{isParent}} - {{isNextToMe}}</span>
+  <div class="sortable-tree" :class="{'empty-node': data[attr]}" :draggable="data[attr]" @dragstart.stop="dragStart()" @dragover.prevent @dragenter.stop.prevent="dragEnter()"
+       @dragleave.stop="dragLeave()" @drop.stop="drop" @dragend.stop.prevent="dragEnd">
+    <span>o {{data[attr]}}</span>
     <ul v-if="hasChildren(data)">
       <li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item)}">
-        <div class="sortable-tree-item-drag" :draggable="item[attr]" @dragstart.stop="dragStart(item, index, $event)" @dragover.prevent @dragenter.stop="dragEnter()"
-             @dragleave.stop="dragLeave(item)" @drop.stop="drop" @dragend.stop.prevent="dragEnd">
-          <sortable-tree :data="item" :attr="attr" :parentData="data" :idx="index" :dragInfo="dragInfo"></sortable-tree>
-        </div>
+        <sortable-tree :data="item" :attr="attr" :parentData="data" :idx="index" :dragInfo="dragInfo"></sortable-tree>
       </li>
     </ul>
   </div>
@@ -65,28 +63,40 @@ export default {
     },
     isNextToMe () { // 拖放限制 2：判断“我”是否为被拖动节点的相邻节点
       return this.parentData === this.dragObj.parentData && Math.abs(this.idx - this.dragObj.vmIdx) === 1
+    },
+    isAllowToDrop () { // 上述拖放限制条件的综合
+      return !this.data[this.attr] && !this.isNextToMe
     }
   },
   methods: {
     hasChildren (item) {
       return item.children && item.children.length
     },
-    dragStart (item, index, event) { // 被拖动元素
-      this.dragObj.data = item
-      this.dragObj.vm = event.target
-      this.dragObj.vmIdx = index
-      this.dragObj.parentData = this.data
+    dragStart () { // 被拖动元素
+      this.dragObj.data = this.data
+      this.dragObj.vm = this.$el
+      this.dragObj.vmIdx = this.idx
+      this.dragObj.parentData = this.parentData
     },
     dragEnter () { // 作用在目标元素
       this.dragObj.vm.classList.add('draging')
-      if (this.dragObj.data !== this.item) {
-      }
+      if (!this.isAllowToDrop) return
+//      console.log(this.$el)
+      this.$el.style.backgroundColor = 'yellow'
     },
     dragLeave (data) { // 作用在目标元素
+      this.$el.style.backgroundColor = ''
     },
     // 在ondragover中一定要执行preventDefault()，否则ondrop事件不会被触发。
     drop () { // 目标元素
       this.dragObj.vm.classList.remove('draging')
+      this.$el.style.backgroundColor = ''
+      if (!this.isAllowToDrop) return
+      // 无论如何都直接删除被拖动节点
+      let index = this.dragObj.parentData.children.indexOf(this.dragObj.data)
+      this.dragObj.parentData.children.splice(index, 1)
+      // 拖入空节点，成其兄弟（使用 splice 插入节点）
+      this.parentData.children.splice(this.idx / 2, 0, this.dragObj.data)
     },
     dragEnd () {
     }
@@ -150,6 +160,10 @@ export default {
       left: 0;
       top: -10px;
       border-left: 1px solid #999;
+    }
+    &.empty-li {
+      width: 0;
+      height: 0;
     }
   }
 }
