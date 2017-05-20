@@ -66,8 +66,19 @@ export default {
     isNextToMe () { // 拖放限制 2：判断“我”是否为被拖动节点的相邻节点
       return this.parentData === this.dragObj.parentData && Math.abs(this.idx - this.dragObj.vmIdx) === 1
     },
+    isMeOrMyAncestor () { // 判断被拖动节点是否为“我”自身或“我”的祖先
+      let data = this.data
+      while (data) {
+        if (data === this.dragObj.data) {
+          console.log(true)
+          return true
+        }
+        data = data.$parent
+      }
+      return false
+    },
     isAllowToDrop () { // 上述拖放限制条件的综合
-      return !this.data[this.attr] && !this.isNextToMe
+      return !(this.isNextToMe || this.isParent || this.isMeOrMyAncestor)
     }
   },
   methods: {
@@ -104,6 +115,12 @@ export default {
     }
   },
   components: {
+  },
+  updated () {
+    this.data.$parent = this.parentData
+  },
+  mounted () {
+    this.data.$parent = this.parentData
   }
 }
 </script>
@@ -111,6 +128,7 @@ export default {
 <style lang="scss" scoped>
 .sortable-tree {
   font-size: 16px;
+  overflow: hidden;
 
   .content {
     min-height: 10px;
