@@ -1,9 +1,11 @@
 <template>
   <div class="sortable-tree" :class="{'empty-node': data[attr]}" :draggable="data[attr]" @dragstart.stop="dragStart()" @dragover.prevent @dragenter.stop.prevent="dragEnter()"
        @dragleave.stop="dragLeave()" @drop.stop="drop" @dragend.stop.prevent="dragEnd">
-    <span>o {{data[attr]}}</span>
+    <div class="content">
+      <span>{{data[attr]}}</span>
+    </div>
     <ul v-if="hasChildren(data)">
-      <li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item)}">
+      <li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': item[attr], 'blank-li': !item[attr]}">
         <sortable-tree :data="item" :attr="attr" :parentData="data" :idx="index" :dragInfo="dragInfo"></sortable-tree>
       </li>
     </ul>
@@ -82,15 +84,15 @@ export default {
       this.dragObj.vm.classList.add('draging')
       if (!this.isAllowToDrop) return
 //      console.log(this.$el)
-      this.$el.style.backgroundColor = 'yellow'
+      this.$el.classList.add('droper')
     },
     dragLeave (data) { // 作用在目标元素
-      this.$el.style.backgroundColor = ''
+      this.$el.classList.remove('droper')
     },
     // 在ondragover中一定要执行preventDefault()，否则ondrop事件不会被触发。
     drop () { // 目标元素
       this.dragObj.vm.classList.remove('draging')
-      this.$el.style.backgroundColor = ''
+      this.$el.classList.remove('droper')
       if (!this.isAllowToDrop) return
       // 无论如何都直接删除被拖动节点
       let index = this.dragObj.parentData.children.indexOf(this.dragObj.data)
@@ -109,6 +111,10 @@ export default {
 <style lang="scss" scoped>
 .sortable-tree {
   font-size: 16px;
+
+  .content {
+    min-height: 10px;
+  }
 
   ul, li {
     margin: 0;
@@ -154,16 +160,22 @@ export default {
       left: 0;
       border-top: 1px solid #999;
     }
-    &.parent-li:last-child:before {
+
+    &.parent-li:nth-last-child(2):before {
       width: 24px;
       height: 32px; // 32为1个li的高度
       left: 0;
       top: -10px;
       border-left: 1px solid #999;
     }
-    &.empty-li {
-      width: 0;
-      height: 0;
+    &.blank-li {
+      position: absolute;
+      z-index: 1;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 10px;
+      overflow: hidden;
     }
   }
 }
@@ -172,6 +184,6 @@ export default {
   background: #EFEEEF;
 }
 .droper {
-  background: yellow;
+  background: lightgreen;
 }
 </style>
