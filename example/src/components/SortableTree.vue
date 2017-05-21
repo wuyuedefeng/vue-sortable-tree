@@ -68,12 +68,14 @@ export default {
       return this.parentData === this.dragObj.parentData && Math.abs(this.idx - this.dragObj.vmIdx) === 1
     },
     isMeOrMyAncestor () { // 判断被拖动节点是否为“我”自身或“我”的祖先
-      let data = this.data
-      while (data) {
+//      let data = this.data
+      let parent = this
+      while (parent) {
+        let data = parent.data
         if (data === this.dragObj.data) {
           return true
         }
-        data = data.$parent
+        parent = parent.$parent
       }
       return false
     },
@@ -119,14 +121,6 @@ export default {
     },
     dragEnd () {
     }
-  },
-  components: {
-  },
-  updated () {
-    this.data.$parent = this.parentData
-  },
-  mounted () {
-    this.data.$parent = this.parentData
   }
 }
 </script>

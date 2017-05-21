@@ -5,7 +5,8 @@
 </template>
 
 <script>
-import SortableTree from './SortableTree.vue'
+// import SortableTree from './SortableTree.vue'
+import SortableTree from 'vue-sortable-tree'
 export default {
   name: 'hello',
   template: '#sortable-child-tpl',
