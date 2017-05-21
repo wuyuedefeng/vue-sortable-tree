@@ -28,3 +28,4 @@ npm test
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+scp  -r /Users/mars/me/github/vue-sortable-tree/example/dist deploy@47.93.21.147:/mnt/www/examples/vue-sortable-tree

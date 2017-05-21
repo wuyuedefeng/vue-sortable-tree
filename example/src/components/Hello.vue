@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <sortable-tree :data="treeData"></sortable-tree>
+    <sortable-tree :data="treeData" attr="name"></sortable-tree>
   </div>
 </template>
 
@@ -23,21 +23,7 @@ export default {
                   { name: '1-2-1' }
                 ]
               },
-              { name: '1-3' },
-              { name: '1-4',
-                children: [
-                  { name: '1-4-1',
-                    children: [
-                      { name: '1-4-1-1',
-                        children: [
-                          { name: '1-4-1-1-1' }
-                        ]
-                      }
-                    ]
-                  },
-                  { name: '1-4-2' }
-                ]
-              }
+              { name: '1-3' }
             ]
           },
           {
