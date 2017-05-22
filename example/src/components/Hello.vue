@@ -21,7 +21,8 @@ export default {
           {
             name: '2',
             children: [
-              { name: '2-1' }
+              { name: '2-1' },
+              {name: ''}
             ]
           }
         ]

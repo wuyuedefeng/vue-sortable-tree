@@ -7,7 +7,7 @@
       </slot>
     </div>
     <ul v-if="hasChildren(data)">
-      <li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': item[attr], 'blank-li': !item[attr]}">
+      <li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': !item['_replaceLi_'], 'blank-li': item['_replaceLi_']}">
         <sortable-tree :data="item" :attr="attr" :parentData="data" :idx="index" :dragInfo="dragInfo">
           <template scope="{item: item}">
             <slot :item="item">
@@ -63,8 +63,8 @@ export default {
       if (!children || !children.length) return []
 
       let _children = []
-      children.forEach(child => _children.push({}, child))
-      _children.push({})
+      children.forEach(child => _children.push({_replaceLi_: true}, child))
+      _children.push({_replaceLi_: true})
 
       // 最后生成 [E1, N1, E2, N2, E3, N3, E4]（其中 N 表示节点，E 表示空节点）
       return _children
@@ -96,7 +96,7 @@ export default {
       return item.children && item.children.length
     },
     dragStart (event) { // 被拖动元素
-      if (!this.data[this.attr]) { // 空元素不允许拖动
+      if (this.data['_replaceLi_']) { // 空元素不允许拖动
         return event.preventDefault()
       }
 
@@ -122,7 +122,7 @@ export default {
       let index = this.dragObj.parentData.children.indexOf(this.dragObj.data)
       this.dragObj.parentData.children.splice(index, 1)
       // 拖入空节点，成其兄弟（使用 splice 插入节点）
-      if (!this.data[this.attr]) {
+      if (this.data['_replaceLi_']) {
         return this.parentData.children.splice(this.idx / 2, 0, this.dragObj.data)
       }
       // 拖入普通节点，成为其子
