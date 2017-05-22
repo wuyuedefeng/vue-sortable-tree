@@ -1,5 +1,5 @@
 <template>
-  <div class="sortable-tree" :draggable="data[attr]" @dragstart.stop="dragStart()" @dragover.stop.prevent @dragenter.stop.prevent="dragEnter()"
+  <div class="sortable-tree" :draggable="true" @dragstart.stop="dragStart($event)" @dragover.stop.prevent @dragenter.stop.prevent="dragEnter()"
        @dragleave.stop="dragLeave()" @drop.stop="drop" @dragend.stop.prevent="dragEnd">
     <div class="content">
       <span>{{data[attr]}}</span>
@@ -87,7 +87,11 @@
 			hasChildren (item) {
 				return item.children && item.children.length
 			},
-			dragStart () { // 被拖动元素
+			dragStart (event) { // 被拖动元素
+				if (!this.data[this.attr]) { // 空元素不允许拖动
+					return event.preventDefault()
+				}
+
 				this.dragObj.data = this.data
 				this.dragObj.vm = this.$el
 				this.dragObj.vmIdx = this.idx
@@ -126,11 +130,20 @@
 </script>
 
 <style lang="scss" scoped>
+  $content-height: 22px;
+
   .sortable-tree {
     font-size: 16px;
 
     .content {
       min-height: 10px;
+      height: $content-height;
+    }
+
+    .blank-li {
+      .content {
+        height: 0;
+      }
     }
 
     ul, li {
@@ -166,13 +179,13 @@
         width: 24px;
         height: 100%;
         left: 0;
-        top: -12px;
+        top: 10px - $content-height;
         /*background: red;*/
         border-left: 1px solid #999;
       }
       &:after {
         width: 24px;
-        height: 20px;
+        height: $content-height;
         top: 10px;
         left: 0;
         border-top: 1px solid #999;
@@ -180,9 +193,9 @@
 
       &.parent-li:nth-last-child(2):before {
         width: 24px;
-        height: 32px; // 32为1个li的高度
+        height: $content-height; // 32为1个li的高度
         left: 0;
-        top: -22px;
+        top: 10px - $content-height;
         border-left: 1px solid #999;
       }
       &.blank-li{

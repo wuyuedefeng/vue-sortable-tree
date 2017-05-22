@@ -1,5 +1,5 @@
 <template>
-  <div class="sortable-tree" :draggable="data[attr]" @dragstart.stop="dragStart()" @dragover.stop.prevent @dragenter.stop.prevent="dragEnter()"
+  <div class="sortable-tree" :draggable="true" @dragstart.stop="dragStart($event)" @dragover.stop.prevent @dragenter.stop.prevent="dragEnter()"
        @dragleave.stop="dragLeave()" @drop.stop="drop" @dragend.stop.prevent="dragEnd">
     <div class="content">
       <span>{{data[attr]}}</span>
@@ -87,7 +87,11 @@ export default {
     hasChildren (item) {
       return item.children && item.children.length
     },
-    dragStart () { // 被拖动元素
+    dragStart (event) { // 被拖动元素
+      if (!this.data[this.attr]) { // 空元素不允许拖动
+        return event.preventDefault()
+      }
+
       this.dragObj.data = this.data
       this.dragObj.vm = this.$el
       this.dragObj.vmIdx = this.idx
@@ -134,6 +138,12 @@ $content-height: 22px;
   .content {
     min-height: 10px;
     height: $content-height;
+  }
+
+  .blank-li {
+    .content {
+      height: 0;
+    }
   }
 
   ul, li {
