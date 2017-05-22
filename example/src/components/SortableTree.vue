@@ -10,7 +10,9 @@
       <li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': item[attr], 'blank-li': !item[attr]}">
         <sortable-tree :data="item" :attr="attr" :parentData="data" :idx="index" :dragInfo="dragInfo">
           <template scope="{item: item}">
-            <slot :item="item"></slot>
+            <slot :item="item">
+              <span>{{item[attr]}}</span>
+            </slot>
           </template>
         </sortable-tree>
       </li>
