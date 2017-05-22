@@ -140,6 +140,7 @@ $content-height: 22px;
 
 .sortable-tree {
   font-size: 16px;
+  min-height: 10px;
 
   .content {
     height: $content-height;
