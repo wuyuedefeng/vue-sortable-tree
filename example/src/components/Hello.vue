@@ -1,8 +1,8 @@
 <template>
   <div class="hello">
     <sortable-tree :data="treeData">
-      <template scope="{data}">
-        <span>{{data.name}}</span>
+      <template scope="{item}">
+        <span>{{item.name}}</span>
       </template>
     </sortable-tree>
   </div>
@@ -18,17 +18,6 @@ export default {
       treeData: {
         name: 'root',
         children: [
-          { name: '1',
-            children: [
-              { name: '1-1' },
-              { name: '1-2',
-                children: [
-                  { name: '1-2-1' }
-                ]
-              },
-              { name: '1-3' }
-            ]
-          },
           {
             name: '2',
             children: [

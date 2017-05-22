@@ -2,15 +2,15 @@
   <div class="sortable-tree" :draggable="true" @dragstart.stop="dragStart($event)" @dragover.stop.prevent @dragenter.stop.prevent="dragEnter()"
        @dragleave.stop="dragLeave()" @drop.stop="drop" @dragend.stop.prevent="dragEnd">
     <div class="content">
-      <slot :data="data">
+      <slot :item="data">
         <span>{{data[attr]}}</span>
       </slot>
     </div>
     <ul v-if="hasChildren(data)">
       <li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': item[attr], 'blank-li': !item[attr]}">
         <sortable-tree :data="item" :attr="attr" :parentData="data" :idx="index" :dragInfo="dragInfo">
-          <template scope="{data: item}">
-            <slot :data="item"></slot>
+          <template scope="{item: item}">
+            <slot :item="item"></slot>
           </template>
         </sortable-tree>
       </li>

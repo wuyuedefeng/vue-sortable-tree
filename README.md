@@ -23,7 +23,11 @@ components: {
 ### usage
 ```
 <template>
-  <sortable-tree :data="treeData" attr="name"></sortable-tree>
+  <sortable-tree :data="treeData">
+    <template scope="{item}">
+      <span>{{item.name}}</span>
+    </template>
+  </sortable-tree>
 </template>
 
 <script>
