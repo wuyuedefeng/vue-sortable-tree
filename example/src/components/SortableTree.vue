@@ -187,7 +187,7 @@ export default {
     }
     &.blank-li {
       position: absolute;
-      z-index: 1;
+      top: 0;
       margin: 0;
       padding: 0;
       width: 100%;
