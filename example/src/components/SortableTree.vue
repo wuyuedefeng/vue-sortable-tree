@@ -150,7 +150,7 @@ export default {
 
   li {
     position: relative;
-    padding: 10px 0 0 24px;
+    padding-left: 24px;
   }
 }
 /* 位置相关 */
@@ -173,7 +173,7 @@ export default {
     &:after {
       width: 24px;
       height: 20px;
-      top: 20px;
+      top: 10px;
       left: 0;
       border-top: 1px solid #999;
     }
@@ -182,17 +182,22 @@ export default {
       width: 24px;
       height: 32px; // 32为1个li的高度
       left: 0;
-      top: -12px;
+      top: -22px;
       border-left: 1px solid #999;
     }
-    &.blank-li {
-      position: absolute;
-      top: 0;
+    &.blank-li{
       margin: 0;
       padding: 0;
       width: 100%;
       height: 10px;
-      overflow: hidden;
+
+      &:after {
+        width: 0;
+      }
+
+      &:last-child {
+        height: 0;
+      }
     }
   }
 }
