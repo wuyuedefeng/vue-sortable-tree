@@ -138,7 +138,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$content-height: 32px;
+$content-height: 30px;
 $blank-li-height: 5px;
 
 .sortable-tree {
@@ -191,14 +191,14 @@ $blank-li-height: 5px;
       width: 24px;
       height: 100%;
       left: 0;
-      top: 10px - $content-height + $blank-li-height;
+      top: $content-height / -2;
       /*background: red;*/
       border-left: 1px solid #999;
     }
     &:after {
       width: 24px;
       height: $content-height;
-      top: 10px + $blank-li-height;
+      top: $content-height / 2;
       left: 0;
       border-top: 1px solid #999;
     }
@@ -207,7 +207,7 @@ $blank-li-height: 5px;
       width: 24px;
       height: $content-height; // 32为1个li的高度
       left: 0;
-      top: 10px - $content-height + $blank-li-height;
+      top: $content-height / -2;
       border-left: 1px solid #999;
     }
     &.blank-li{
