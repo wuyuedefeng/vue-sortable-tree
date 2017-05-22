@@ -1,6 +1,10 @@
 <template>
   <div class="hello">
-    <sortable-tree :data="treeData" attr="name"></sortable-tree>
+    <sortable-tree :data="treeData">
+      <template scope="{data}">
+        <span>{{data.name}}</span>
+      </template>
+    </sortable-tree>
   </div>
 </template>
 
