@@ -7,10 +7,12 @@
       </slot>
     </div>
     <ul v-if="hasChildren(data)">
-      <li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': item[attr], 'blank-li': !item[attr]}">
+      <li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': !item['_replaceLi_'], 'blank-li': item['_replaceLi_']}">
         <sortable-tree :data="item" :attr="attr" :parentData="data" :idx="index" :dragInfo="dragInfo">
           <template scope="{item: item}">
-            <slot :item="item"></slot>
+            <slot :item="item">
+              <span>{{item[attr]}}</span>
+            </slot>
           </template>
         </sortable-tree>
       </li>
@@ -61,8 +63,8 @@
 				if (!children || !children.length) return []
 
 				let _children = []
-				children.forEach(child => _children.push({}, child))
-				_children.push({})
+				children.forEach(child => _children.push({_replaceLi_: true}, child))
+				_children.push({_replaceLi_: true})
 
 				// 最后生成 [E1, N1, E2, N2, E3, N3, E4]（其中 N 表示节点，E 表示空节点）
 				return _children
@@ -94,7 +96,7 @@
 				return item.children && item.children.length
 			},
 			dragStart (event) { // 被拖动元素
-				if (!this.data[this.attr]) { // 空元素不允许拖动
+				if (this.data['_replaceLi_']) { // 空元素不允许拖动
 					return event.preventDefault()
 				}
 
@@ -120,7 +122,7 @@
 				let index = this.dragObj.parentData.children.indexOf(this.dragObj.data)
 				this.dragObj.parentData.children.splice(index, 1)
 				// 拖入空节点，成其兄弟（使用 splice 插入节点）
-				if (!this.data[this.attr]) {
+				if (this.data['_replaceLi_']) {
 					return this.parentData.children.splice(this.idx / 2, 0, this.dragObj.data)
 				}
 				// 拖入普通节点，成为其子
@@ -136,11 +138,12 @@
 </script>
 
 <style lang="scss" scoped>
-  $content-height: 22px;
+  $content-height: 30px;
+  $blank-li-height: 5px;
 
   .sortable-tree {
     font-size: 16px;
-    min-height: 10px;
+    min-height: $blank-li-height;
 
     .content {
       height: $content-height;
@@ -188,14 +191,14 @@
         width: 24px;
         height: 100%;
         left: 0;
-        top: 10px - $content-height;
+        top: $content-height / -2;
         /*background: red;*/
         border-left: 1px solid #999;
       }
       &:after {
         width: 24px;
         height: $content-height;
-        top: 10px;
+        top: $content-height / 2;
         left: 0;
         border-top: 1px solid #999;
       }
@@ -204,14 +207,14 @@
         width: 24px;
         height: $content-height; // 32为1个li的高度
         left: 0;
-        top: 10px - $content-height;
+        top: $content-height / -2;
         border-left: 1px solid #999;
       }
       &.blank-li{
         margin: 0;
         padding: 0;
         width: 100%;
-        height: 10px;
+        height: $blank-li-height;
 
         &:after {
           width: 0;
