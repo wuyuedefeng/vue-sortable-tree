@@ -82,3 +82,9 @@ export default {
 ### project demo image
 ![img](https://github.com/wuyuedefeng/vue-sortable-tree/blob/master/example/src/assets/tree.png)
 
+use can easy extend use custom template
+
+eg:
+
+![img](https://github.com/wuyuedefeng/vue-sortable-tree/blob/master/example/src/assets/tree-ext.png)
+
