@@ -1,5 +1,5 @@
 <template>
-  <div class="sortable-tree" :draggable="true" @dragstart.stop="dragStart($event)" @dragover.stop.prevent @dragenter.stop.prevent="dragEnter()"
+  <div class="sortable-tree" :draggable="parentData" @dragstart.stop="dragStart($event)" @dragover.stop.prevent @dragenter.stop.prevent="dragEnter()"
        @dragleave.stop="dragLeave()" @drop.stop="drop" @dragend.stop.prevent="dragEnd">
     <div class="content">
       <slot :item="data">
@@ -179,6 +179,7 @@ $blank-li-height: 5px;
   .content {
     height: $content-height;
     line-height: $content-height;
+    user-select:none;
   }
 
   .blank-li {
