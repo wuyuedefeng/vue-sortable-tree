@@ -76,6 +76,7 @@ export default {
 * `childrenAttr`  default: 'children'
 * `mixinParentKey` default: '' if wan't get item's parent data can set this, eg: item.$parent
 * `changePosition` callback， params options: Object {beforeParent, data, afterParent}
+* `closeStateKey`  key for justify folder open or close
 
 
 ### project demo image
