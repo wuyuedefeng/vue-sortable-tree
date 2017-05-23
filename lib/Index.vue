@@ -6,7 +6,7 @@
 				<span>{{data[attr]}}</span>
 			</slot>
 		</div>
-		<ul v-if="hasChildren(data) && (!this.closeStateKey || this.closeStateKey && !data[this.closeStateKey])">
+		<ul v-if="hasChildren(data) && (!closeStateKey || closeStateKey && !data[closeStateKey])">
 			<li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': !item['_replaceLi_'], 'blank-li': item['_replaceLi_']}">
 				<sortable-tree :data="item" :attr="attr" :childrenAttr="childrenAttr" :mixinParentKey="mixinParentKey" :closeStateKey="closeStateKey"
 				               :parentData="data" :idx="index" :dragInfo="dragInfo" @changePosition="changePosition">
