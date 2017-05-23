@@ -3,7 +3,7 @@
     <button @click="consoleData">consoleData</button>
     <sortable-tree :data="treeData" mixinParentKey="$parent">
       <template scope="{item}">
-        <span>{{item.name}}</span>
+        <span>o {{item.name}}</span>
       </template>
     </sortable-tree>
   </div>

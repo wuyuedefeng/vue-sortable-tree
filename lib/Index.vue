@@ -1,24 +1,24 @@
 <template>
-  <div class="sortable-tree" :draggable="true" @dragstart.stop="dragStart($event)" @dragover.stop.prevent @dragenter.stop.prevent="dragEnter()"
-       @dragleave.stop="dragLeave()" @drop.stop="drop" @dragend.stop.prevent="dragEnd">
-    <div class="content">
-      <slot :item="data">
-        <span>{{data[attr]}}</span>
-      </slot>
-    </div>
-    <ul v-if="hasChildren(data)">
-      <li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': !item['_replaceLi_'], 'blank-li': item['_replaceLi_']}">
-        <sortable-tree :data="item" :attr="attr" :childrenAttr="childrenAttr" :mixinParentKey="mixinParentKey"
-                       :parentData="data" :idx="index" :dragInfo="dragInfo">
-          <template scope="{item: item}">
-            <slot :item="item">
-              <span>{{item[attr]}}</span>
-            </slot>
-          </template>
-        </sortable-tree>
-      </li>
-    </ul>
-  </div>
+	<div class="sortable-tree" :draggable="true" @dragstart.stop="dragStart($event)" @dragover.stop.prevent @dragenter.stop.prevent="dragEnter()"
+	     @dragleave.stop="dragLeave()" @drop.stop="drop" @dragend.stop.prevent="dragEnd">
+		<div class="content">
+			<slot :item="data">
+				<span>{{data[attr]}}</span>
+			</slot>
+		</div>
+		<ul v-if="hasChildren(data)">
+			<li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': !item['_replaceLi_'], 'blank-li': item['_replaceLi_']}">
+				<sortable-tree :data="item" :attr="attr" :childrenAttr="childrenAttr" :mixinParentKey="mixinParentKey"
+				               :parentData="data" :idx="index" :dragInfo="dragInfo">
+					<template scope="{item: item}">
+						<slot :item="item">
+							<span>{{item[attr]}}</span>
+						</slot>
+					</template>
+				</sortable-tree>
+			</li>
+		</ul>
+	</div>
 </template>
 
 <script>
@@ -158,99 +158,99 @@
 </script>
 
 <style lang="scss" scoped>
-  $content-height: 30px;
-  $blank-li-height: 5px;
+	$content-height: 30px;
+	$blank-li-height: 5px;
 
-  .sortable-tree {
-    font-size: 16px;
-    min-height: $blank-li-height;
+	.sortable-tree {
+		font-size: 16px;
+		min-height: $blank-li-height;
 
-    .content {
-      height: $content-height;
-      line-height: $content-height;
-    }
+		.content {
+			height: $content-height;
+			line-height: $content-height;
+		}
 
-    .blank-li {
-      .content {
-        width: 0;
-        height: 0;
-        overflow: hidden;
-      }
-    }
+		.blank-li {
+			.content {
+				width: 0;
+				height: 0;
+				overflow: hidden;
+			}
+		}
 
-    ul, li {
-      margin: 0;
-      padding: 0;
-    }
+		ul, li {
+			margin: 0;
+			padding: 0;
+		}
 
-    ul {
-      position: relative;
-      display: list-item;
-      list-style: none;
-      &:empty {
-        width: 0;
-        height: 0;
-      }
-    }
+		ul {
+			position: relative;
+			display: list-item;
+			list-style: none;
+			&:empty {
+				width: 0;
+				height: 0;
+			}
+		}
 
-    li {
-      position: relative;
-      padding-left: 24px;
-    }
-  }
-  /* 位置相关 */
-  .sortable-tree {
-    li {
-      position: relative;
+		li {
+			position: relative;
+			padding-left: 24px;
+		}
+	}
+	/* 位置相关 */
+	.sortable-tree {
+		li {
+			position: relative;
 
-      &:before, &:after {
-        position: absolute;
-        content: '';
-      }
-      &:before {
-        width: 24px;
-        height: 100%;
-        left: 0;
-        top: $content-height / -2;
-        /*background: red;*/
-        border-left: 1px solid #999;
-      }
-      &:after {
-        width: 24px;
-        height: $content-height;
-        top: $content-height / 2;
-        left: 0;
-        border-top: 1px solid #999;
-      }
+			&:before, &:after {
+				position: absolute;
+				content: '';
+			}
+			&:before {
+				width: 24px;
+				height: 100%;
+				left: 0;
+				top: $content-height / -2;
+				/*background: red;*/
+				border-left: 1px solid #999;
+			}
+			&:after {
+				width: 24px;
+				height: $content-height;
+				top: $content-height / 2;
+				left: 0;
+				border-top: 1px solid #999;
+			}
 
-      &.parent-li:nth-last-child(2):before {
-        width: 24px;
-        height: $content-height; // 32为1个li的高度
-        left: 0;
-        top: $content-height / -2;
-        border-left: 1px solid #999;
-      }
-      &.blank-li{
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: $blank-li-height;
+			&.parent-li:nth-last-child(2):before {
+				width: 24px;
+				height: $content-height; // 32为1个li的高度
+				left: 0;
+				top: $content-height / -2;
+				border-left: 1px solid #999;
+			}
+			&.blank-li{
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				height: $blank-li-height;
 
-        &:after {
-          width: 0;
-        }
+				&:after {
+					width: 0;
+				}
 
-        &:last-child {
-          height: 0;
-        }
-      }
-    }
-  }
-  // 拖动相关
-  .draging {
-    background: #EFEEEF;
-  }
-  .droper {
-    background: lightgreen;
-  }
+				&:last-child {
+					height: 0;
+				}
+			}
+		}
+	}
+	// 拖动相关
+	.draging {
+		background: #EFEEEF;
+	}
+	.droper {
+		background: lightgreen;
+	}
 </style>
