@@ -8,7 +8,8 @@
     </div>
     <ul v-if="hasChildren(data)">
       <li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': !item['_replaceLi_'], 'blank-li': item['_replaceLi_']}">
-        <sortable-tree :data="item" :attr="attr" :parentData="data" :idx="index" :dragInfo="dragInfo">
+        <sortable-tree :data="item" :attr="attr" :childrenAttr="childrenAttr" :mixinParentKey="mixinParentKey"
+                       :parentData="data" :idx="index" :dragInfo="dragInfo">
           <template scope="{item: item}">
             <slot :item="item">
               <span>{{item[attr]}}</span>
@@ -32,6 +33,15 @@
 				type: String,
 				default: 'name'
 			},
+			childrenAttr: {
+				type: String,
+				default: 'children'
+			},
+			mixinParentKey: {
+				type: String,
+				default: ''
+			},
+			// inner used from here
 			parentData: {
 				type: Object
 			},
@@ -59,7 +69,7 @@
 		computed: {
 			children () {
 				// 举例：原本是 [N1, N2, N3]
-				let { children } = this.data
+				let children = this.data[this.childrenAttr]
 				if (!children || !children.length) return []
 
 				let _children = []
@@ -93,7 +103,7 @@
 		},
 		methods: {
 			hasChildren (item) {
-				return item.children && item.children.length
+				return item[this.childrenAttr] && item[this.childrenAttr].length
 			},
 			dragStart (event) { // 被拖动元素
 				if (this.data['_replaceLi_']) { // 空元素不允许拖动
@@ -119,19 +129,29 @@
 				this.$el.classList.remove('droper')
 				if (!this.isAllowToDrop) return
 				// 无论如何都直接删除被拖动节点
-				let index = this.dragObj.parentData.children.indexOf(this.dragObj.data)
-				this.dragObj.parentData.children.splice(index, 1)
+				let index = this.dragObj.parentData[this.childrenAttr].indexOf(this.dragObj.data)
+				this.dragObj.parentData[this.childrenAttr].splice(index, 1)
 				// 拖入空节点，成其兄弟（使用 splice 插入节点）
 				if (this.data['_replaceLi_']) {
-					return this.parentData.children.splice(this.idx / 2, 0, this.dragObj.data)
+					return this.parentData[this.childrenAttr].splice(this.idx / 2, 0, this.dragObj.data)
 				}
 				// 拖入普通节点，成为其子
-				if (!this.data.children) {
-					Vue.set(this.data, 'children', [])
+				if (!this.data[this.childrenAttr]) {
+					Vue.set(this.data, [this.childrenAttr], [])
 				} // 须用 $set 引入双向绑定
-				this.data.children.push(this.dragObj.data)
+				this.data[this.childrenAttr].push(this.dragObj.data)
 			},
 			dragEnd () {
+			}
+		},
+		updated () {
+			if (this.mixinParentKey) {
+				this.data[this.mixinParentKey] = this.parentData
+			}
+		},
+		mounted () {
+			if (this.mixinParentKey) {
+				this.data[this.mixinParentKey] = this.parentData
 			}
 		}
 	}
