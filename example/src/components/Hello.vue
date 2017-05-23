@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <button @click="consoleData">consoleData</button>
-    <sortable-tree :data="treeData" mixinParentKey="$parent">
+    <sortable-tree :data="treeData" mixinParentKey="$parent" @changePosition="changePosition">
       <template scope="{item}">
         <span>o {{item.name}}</span>
       </template>
@@ -33,6 +33,9 @@ export default {
   methods: {
     consoleData () {
       console.log(this.treeData)
+    },
+    changePosition (option) {
+      console.log('100', option)
     }
   },
   components: {

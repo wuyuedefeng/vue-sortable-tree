@@ -9,7 +9,7 @@
     <ul v-if="hasChildren(data)">
       <li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': !item['_replaceLi_'], 'blank-li': item['_replaceLi_']}">
         <sortable-tree :data="item" :attr="attr" :childrenAttr="childrenAttr" :mixinParentKey="mixinParentKey"
-                       :parentData="data" :idx="index" :dragInfo="dragInfo">
+                       :parentData="data" :idx="index" :dragInfo="dragInfo" @changePosition="changePosition">
           <template scope="{item: item}">
             <slot :item="item">
               <span>{{item[attr]}}</span>
@@ -102,6 +102,9 @@ export default {
     }
   },
   methods: {
+    changePosition (opts) {
+      this.$emit('changePosition', opts)
+    },
     hasChildren (item) {
       return item[this.childrenAttr] && item[this.childrenAttr].length
     },
@@ -132,14 +135,22 @@ export default {
       let index = this.dragObj.parentData[this.childrenAttr].indexOf(this.dragObj.data)
       this.dragObj.parentData[this.childrenAttr].splice(index, 1)
       // 拖入空节点，成其兄弟（使用 splice 插入节点）
+      let afterParent = this.parentData
       if (this.data['_replaceLi_']) {
-        return this.parentData[this.childrenAttr].splice(this.idx / 2, 0, this.dragObj.data)
+        this.parentData[this.childrenAttr].splice(this.idx / 2, 0, this.dragObj.data)
+      } else {
+        afterParent = this.data
+        // 拖入普通节点，成为其子
+        if (!this.data[this.childrenAttr]) {
+          Vue.set(this.data, [this.childrenAttr], [])
+        } // 须用 $set 引入双向绑定
+        this.data[this.childrenAttr].push(this.dragObj.data)
       }
-      // 拖入普通节点，成为其子
-      if (!this.data[this.childrenAttr]) {
-        Vue.set(this.data, [this.childrenAttr], [])
-      } // 须用 $set 引入双向绑定
-      this.data[this.childrenAttr].push(this.dragObj.data)
+      this.$emit('changePosition', {
+        beforeParent: this.dragObj.parentData,
+        data: this.dragObj.data,
+        afterParent: afterParent
+      })
     },
     dragEnd () {
     }

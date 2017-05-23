@@ -64,7 +64,7 @@ export default {
 
 ### params
 ```
- <sortable-tree :data="treeData" attr="name" childrenAttr="children" mixinParentKey="$parent">
+ <sortable-tree :data="treeData" attr="name" childrenAttr="children" mixinParentKey="$parent" @changePosition="changePosition">
     <template scope="{item}">
       <span>{{item.name}}</span>
     </template>
@@ -75,8 +75,7 @@ export default {
 * `attr`  default: 'name'  if use template can't set
 * `childrenAttr`  default: 'children'
 * `mixinParentKey` default: '' if wan't get item's parent data can set this, eg: item.$parent
-
-
+* `changePosition` callback， params options: Object {beforeParent, data, afterParent}
 
 
 ### project demo image
