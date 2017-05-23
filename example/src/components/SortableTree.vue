@@ -1,5 +1,5 @@
 <template>
-  <div class="sortable-tree" :draggable="parentData" @dragstart.stop="dragStart($event)" @dragover.stop.prevent @dragenter.stop.prevent="dragEnter()"
+  <div class="sortable-tree" :draggable="draggable && parentData" @dragstart.stop="dragStart($event)" @dragover.stop.prevent @dragenter.stop.prevent="dragEnter()"
        @dragleave.stop="dragLeave()" @drop.stop="drop" @dragend.stop.prevent="dragEnd">
     <div class="content">
       <slot :item="data">
@@ -8,7 +8,7 @@
     </div>
     <ul v-if="hasChildren(data) && (!this.closeStateKey || this.closeStateKey && !this.data[this.closeStateKey])">
       <li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': !item['_replaceLi_'], 'blank-li': item['_replaceLi_']}">
-        <sortable-tree :data="item" :attr="attr" :childrenAttr="childrenAttr" :mixinParentKey="mixinParentKey" :closeStateKey="closeStateKey"
+        <sortable-tree :data="item" :attr="attr" :childrenAttr="childrenAttr" :mixinParentKey="mixinParentKey" :closeStateKey="closeStateKey" :draggable="draggable"
                        :parentData="data" :idx="index" :dragInfo="dragInfo" @changePosition="changePosition">
           <template scope="{item: item}">
             <slot :item="item">
@@ -44,6 +44,10 @@ export default {
     mixinParentKey: {
       type: String,
       default: ''
+    },
+    draggable: {
+      type: Boolean,
+      default: true
     },
     // inner used from here
     parentData: {

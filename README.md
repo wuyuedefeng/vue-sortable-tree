@@ -29,37 +29,6 @@ components: {
     </template>
   </sortable-tree>
 </template>
-
-<script>
-export default {
-  data () {
-    return {
-      treeData: {
-        name: 'root',
-        children: [
-          { name: '1',
-            children: [
-              { name: '1-1' },
-              { name: '1-2',
-                children: [
-                  { name: '1-2-1' }
-                ]
-              },
-              { name: '1-3' }
-            ]
-          },
-          {
-            name: '2',
-            children: [
-              { name: '2-1' }
-            ]
-          }
-        ]
-      }
-    }
-  }
-}
-</script>
 ```
 
 ### params
@@ -72,11 +41,12 @@ export default {
 ```
 
 * `data`  must
-* `attr`  default: 'name'  if use template can't set
+* `attr`  default: 'name',  if use template can't set
 * `childrenAttr`  default: 'children'
-* `mixinParentKey` default: '' if wan't get item's parent data can set this, eg: item.$parent
-* `changePosition` callback， params options: Object {beforeParent, data, afterParent}
-* `closeStateKey`  key for justify folder open or close
+* `mixinParentKey` default: '', if wan't get item's parent data can set this, eg: item.$parent
+* `changePosition` callback, params options: Object {beforeParent, data, afterParent}
+* `closeStateKey`  default: '', key for justify folder open or close
+* `draggable` default: true, if set false will can't drag
 
 
 ### project demo image
