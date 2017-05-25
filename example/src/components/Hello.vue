@@ -1,9 +1,9 @@
 <template>
   <div class="hello">
     <button @click="consoleData">consoleData</button>
-    <sortable-tree :data="treeData" mixinParentKey="$parent" @changePosition="changePosition" :draggable="false">
+    <sortable-tree :data="treeData" mixinParentKey="$parent" @changePosition="changePosition" :draggable="true">
       <template scope="{item}">
-        <span>o {{item.name}}</span>
+        <span>{{item.name}}</span>
       </template>
     </sortable-tree>
   </div>
@@ -23,7 +23,23 @@ export default {
             name: '2',
             children: [
               { name: '2-1' },
-              {name: ''}
+              {
+                name: '2-2',
+                children: [{
+                  name: '3-2-1',
+                  children: [
+                    { name: '3-2-1-1' },
+                    { name: '3-2-1-2' }
+                  ]
+                }]
+              }
+            ]
+          },
+          {
+            name: '3',
+            children: [
+              { name: '3-1' },
+              { name: '3-2' }
             ]
           }
         ]
@@ -35,7 +51,7 @@ export default {
       console.log(this.treeData)
     },
     changePosition (option) {
-      console.log('100', option)
+      console.log('changePosition: ', option)
     }
   },
   components: {
