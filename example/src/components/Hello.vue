@@ -3,7 +3,7 @@
     <button @click="consoleData">consoleData</button>
     <sortable-tree :data="treeData" mixinParentKey="$parent" @changePosition="changePosition" :draggable="true" closeStateKey="$foldClose">
       <template scope="{item}">
-        <div class="custom-tree-content">
+        <div class="custom-tree-content" :class="{'exitChild': item.children && item.children.length}">
           <span v-if="item['$foldClose'] && item.children && item.children.length" @click="changeState(item)">▶</span>
           <span v-else-if="!item['$foldClose'] && item.children && item.children.length" @click="changeState(item)">▼</span>
           <span>{{item.name}}</span>
@@ -68,11 +68,13 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
   .custom-tree-content {
     position: relative;
     top: 2px;
-    margin-left: -5px;
     z-index: 1;
+    &.exitChild {
+      margin-left: -7px;
+    }
   }
 </style>
