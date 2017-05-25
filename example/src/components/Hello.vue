@@ -1,9 +1,13 @@
 <template>
   <div class="hello">
     <button @click="consoleData">consoleData</button>
-    <sortable-tree :data="treeData" mixinParentKey="$parent" @changePosition="changePosition" :draggable="true">
+    <sortable-tree :data="treeData" mixinParentKey="$parent" @changePosition="changePosition" :draggable="true" closeStateKey="$foldClose">
       <template scope="{item}">
-        <span>{{item.name}}</span>
+        <div class="custom-tree-content">
+          <span v-if="item['$foldClose'] && item.children && item.children.length" @click="changeState(item)">▶</span>
+          <span v-else-if="!item['$foldClose'] && item.children && item.children.length" @click="changeState(item)">▼</span>
+          <span>{{item.name}}</span>
+        </div>
       </template>
     </sortable-tree>
   </div>
@@ -50,6 +54,9 @@ export default {
     consoleData () {
       console.log(this.treeData)
     },
+    changeState (item) {
+      this.$set(item, '$foldClose', !item['$foldClose'])
+    },
     changePosition (option) {
       console.log('changePosition: ', option)
     }
@@ -62,21 +69,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
+  .custom-tree-content {
+    position: relative;
+    top: 2px;
+    margin-left: -5px;
+    z-index: 1;
+  }
 </style>
