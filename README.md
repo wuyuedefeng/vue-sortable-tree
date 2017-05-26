@@ -46,7 +46,7 @@ components: {
 * `mixinParentKey` default: '', if wan't get item's parent data can set this, eg: item.$parent
 * `changePosition` callback, params options: Object {beforeParent, data, afterParent}
 * `closeStateKey`  default: '', key for justify folder open or close
-* `draggable` default: true, if set false will can't drag
+* `dragEnable` default: true, if set false will can't drag
 
 
 ### project demo image

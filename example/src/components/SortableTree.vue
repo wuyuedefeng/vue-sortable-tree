@@ -1,6 +1,6 @@
 <template>
-  <div class="sortable-tree" :draggable="draggable && parentData" @dragstart.stop="dragStart($event)" @dragover.stop.prevent @dragenter.stop.prevent="dragEnter()"
-       @dragleave.stop="dragLeave()" @drop.stop="drop" @dragend.stop.prevent="dragEnd">
+  <div class="sortable-tree" :draggable="dragEnable && parentData && !data['_replaceLi_']" @dragstart.stop="dragStart($event)" @dragover.stop.prevent @dragover.stop.prevent="dragOver()"
+       @dragleave.stop.prevent="dragLeave()" @drop.stop="drop" @dragend.stop.prevent="dragEnd">
     <div class="content">
       <slot :item="data">
         <span>{{data[attr]}}</span>
@@ -8,7 +8,7 @@
     </div>
     <ul v-if="hasChildren(data) && (!this.closeStateKey || this.closeStateKey && !this.data[this.closeStateKey])">
       <li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': !item['_replaceLi_'], 'blank-li': item['_replaceLi_']}">
-        <sortable-tree :data="item" :attr="attr" :childrenAttr="childrenAttr" :mixinParentKey="mixinParentKey" :closeStateKey="closeStateKey" :draggable="draggable"
+        <sortable-tree :data="item" :attr="attr" :childrenAttr="childrenAttr" :mixinParentKey="mixinParentKey" :closeStateKey="closeStateKey" :dragEnable="dragEnable"
                        :parentData="data" :idx="index" :dragInfo="dragInfo" @changePosition="changePosition">
           <template scope="{item: item}">
             <slot :item="item">
@@ -45,7 +45,7 @@ export default {
       type: String,
       default: ''
     },
-    draggable: {
+    dragEnable: {
       type: Boolean,
       default: true
     },
@@ -126,12 +126,14 @@ export default {
       this.dragObj.vmIdx = this.idx
       this.dragObj.parentData = this.parentData
     },
-    dragEnter () { // 作用在目标元素
+    dragOver () { // 作用在目标元素
       this.dragObj.vm.classList.add('draging')
       if (!this.isAllowToDrop) return
+      console.log('add droper', this.$el)
       this.$el.classList.add('droper')
     },
     dragLeave (data) { // 作用在目标元素
+      console.log('remove droper', this.$el)
       this.$el.classList.remove('droper')
     },
     // 在ondragover中一定要执行preventDefault()，否则ondrop事件不会被触发。

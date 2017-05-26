@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <button @click="consoleData">consoleData</button>
-    <sortable-tree :data="treeData" mixinParentKey="$parent" @changePosition="changePosition" :draggable="true" closeStateKey="$foldClose">
+    <sortable-tree :data="treeData" mixinParentKey="$parent" @changePosition="changePosition" :dragEnable="true" closeStateKey="$foldClose">
       <template scope="{item}">
         <div class="custom-tree-content" :class="{'exitChild': item.children && item.children.length}">
           <span v-if="item['$foldClose'] && item.children && item.children.length" @click="changeState(item)">▶</span>
