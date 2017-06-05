@@ -2,6 +2,8 @@
 
 [demo](http://examples.itrydo.com/vue-sortable-tree/dist/index.html)
 
+ QQ交流群:424580388
+
 ### install
 ```
 npm install vue-sortable-tree --save
