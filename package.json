@@ -2,7 +2,7 @@
   "name": "vue-sortable-tree",
   "version": "1.0.18",
   "description": "",
-  "main": "lib/Index.vue",
+  "main": "lib/index.vue",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
