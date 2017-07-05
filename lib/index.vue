@@ -120,6 +120,8 @@
 				if (this.data['_replaceLi_']) { // 空元素不允许拖动
 					return event.preventDefault()
 				}
+				// support firfox ..
+				event.dataTransfer.setData('text/plain', null)
 
 				this.dragObj.data = this.data
 				this.dragObj.vm = this.$el
