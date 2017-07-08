@@ -16,7 +16,7 @@
   "dependencies": {
     "vue": "^2.2.6",
     "vue-router": "^2.3.1",
-    "vue-sortable-tree": "^1.0.20"
+    "vue-sortable-tree": "^1.0.26"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

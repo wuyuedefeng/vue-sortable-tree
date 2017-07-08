@@ -1,6 +1,6 @@
 {
   "name": "vue-sortable-tree",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "description": "",
   "main": "lib/index.vue",
   "scripts": {

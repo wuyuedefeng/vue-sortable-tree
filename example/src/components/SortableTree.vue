@@ -1,6 +1,6 @@
 <template>
   <div class="sortable-tree" :draggable="draggable && parentData" @dragstart.stop="dragStart($event)" @dragover.stop.prevent @dragenter.stop.prevent="dragEnter()"
-       @dragleave.stop="dragLeave()" @drop.stop="drop" @dragend.stop.prevent="dragEnd">
+       @dragleave.stop="dragLeave()" @drop.stop.prevent="drop" @dragend.stop.prevent="dragEnd">
     <div class="content">
       <slot :item="data">
         <span>{{data[attr]}}</span>
