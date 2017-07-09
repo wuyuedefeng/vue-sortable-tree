@@ -1,29 +1,31 @@
 # vue-sortable-tree
+[![npm](https://img.shields.io/npm/v/vue-sortable-tree.svg?style=flat-square)](https://www.npmjs.com/package/vue-sortable-tree)
 
-[demo](http://examples.itrydo.com/vue-sortable-tree/dist/index.html)
+[Demo](http://examples.itrydo.com/vue-sortable-tree/dist/index.html)
 
- QQ交流群:424580388
+ **QQ交流群:** 424580388
 
-### install
+## Install
 ```
 npm install vue-sortable-tree --save
 ```
-global register
-```
+### Global register
+```javascript
 import SortableTree from 'vue-sortable-tree'
 Vue.component(SortableTree.name, SortableTree)
 ```
 
-partial register
-```
+### Partial register
+```javascript
 import SortableTree from 'vue-sortable-tree'
-# then in component
+
+// then in component
 components: {
- [SortableTree.name]: SortableTree
+  [SortableTree.name]: SortableTree
 }
 ```
-### usage
-```
+## Usage
+```vue
 <template>
   <sortable-tree :data="treeData">
     <template scope="{item}">
@@ -33,30 +35,34 @@ components: {
 </template>
 ```
 
-### params
+### Params
+```vue
+<sortable-tree :data="treeData" attr="name" childrenAttr="children" mixinParentKey="$parent" @changePosition="changePosition">
+  <template scope="{item}">
+    <span>{{item.name}}</span>
+  </template>
+</sortable-tree>
 ```
- <sortable-tree :data="treeData" attr="name" childrenAttr="children" mixinParentKey="$parent" @changePosition="changePosition">
-    <template scope="{item}">
-      <span>{{item.name}}</span>
-    </template>
-  </sortable-tree>
-```
 
-* `data`  must
-* `attr`  default: 'name',  if use template can't set
-* `childrenAttr`  default: 'children'
-* `mixinParentKey` default: '', if wan't get item's parent data can set this, eg: item.$parent
-* `changePosition` callback, params options: Object {beforeParent, data, afterParent}
-* `closeStateKey`  default: '', key for justify folder open or close
-* `dragEnable` default: true, if set false will can't drag
+Property | Type | Default | Description
+-------- | ---- | ------- | -----------
+`data` | `Object` | - | Tree data source.
+`attr` | `String` | `'name'` | A name of property in data source that will be display.
+`childrenAttr` | `String` | `children` | A name of property in data source that contain children node.
+`mixinParentKey` | `String` | `''` | A name of property that contain parent data.
+`closeStateKey` | `String` | `''` | A name of property to determine the open/close state.
+`dragEnable` | `Boolean` | `true` | Enable dragging the tree node.
+
+Event | Parameter | Description
+----- | --------- | -----------
+`changePosition` | `{beforeParent, data, afterParent}` | Trigger when node position has been changed.
 
 
-### project demo image
-![img](https://github.com/wuyuedefeng/vue-sortable-tree/blob/master/example/src/assets/tree.png)
+## Project demo image
+![img](./example/src/assets/tree.png)
 
-you can design your style easily with custom template
+You can design your style easily with custom template.
 
-eg:
+**eg:**
 
-![img](https://github.com/wuyuedefeng/vue-sortable-tree/blob/master/example/src/assets/tree-ext.png)
-
+![img](./example/src/assets/tree-ext.png)
