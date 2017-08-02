@@ -58,6 +58,14 @@ Event | Parameter | Description
 `changePosition` | `{beforeParent, data, afterParent}` | Trigger when node position has been changed.
 
 
+### 依赖 sass[scss] support
+if your project can't support scss  please add below dependence
+
+```
+npm install node-sass --save-dev
+npm install sass-loader --save-dev
+```
+
 ## Project demo image
 ![img](./example/src/assets/tree.png)
 
