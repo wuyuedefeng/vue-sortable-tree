@@ -51,7 +51,7 @@ Property | Type | Default | Description
 `childrenAttr` | `String` | `children` | A name of property in data source that contain children node.
 `mixinParentKey` | `String` | `''` | A name of property that contain parent data.
 `closeStateKey` | `String` | `''` | A name of property to determine the open/close state.
-`dragEnable` | `Boolean` | `true` | Enable dragging the tree node.
+`draggable` | `Boolean` | `true` | Enable dragging the tree node.
 
 Event | Parameter | Description
 ----- | --------- | -----------
