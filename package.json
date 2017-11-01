@@ -4,7 +4,8 @@
   "description": "",
   "main": "lib/index.vue",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "scp -r ./dist/* deploy@47.93.21.147:/mnt/www/examples/vue-sortable-tree"
   },
   "repository": {
     "type": "git",

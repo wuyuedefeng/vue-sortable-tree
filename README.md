@@ -1,7 +1,7 @@
 # vue-sortable-tree
 [![npm](https://img.shields.io/npm/v/vue-sortable-tree.svg?style=flat-square)](https://www.npmjs.com/package/vue-sortable-tree)
 
-[Demo](http://examples.itrydo.com/vue-sortable-tree/dist/index.html)
+[Demo](http://examples.itrydo.com/vue-sortable-tree/index.html)
 
  **QQ交流群:** 424580388
 
