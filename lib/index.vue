@@ -127,6 +127,7 @@
 				this.dragObj.vm = this.$el
 				this.dragObj.vmIdx = this.idx
 				this.dragObj.parentData = this.parentData
+				this.dragObj.pastIdx = (this.idx - 1) / 2
 			},
 			dragEnter () { // 作用在目标元素
 				this.dragObj.vm.classList.add('draging')
@@ -159,7 +160,8 @@
 				this.$emit('changePosition', {
 					beforeParent: this.dragObj.parentData,
 					data: this.dragObj.data,
-					afterParent: afterParent
+					afterParent: afterParent,
+					beforeIndex: this.dragObj.pastIdx
 				})
 			},
 			dragEnd () {
