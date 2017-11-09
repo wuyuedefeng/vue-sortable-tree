@@ -148,7 +148,16 @@
 				// 拖入空节点，成其兄弟（使用 splice 插入节点）
 				let afterParent = this.parentData
 				if (this.data['_replaceLi_']) {
-					this.parentData[this.childrenAttr].splice(this.idx / 2, 0, this.dragObj.data)
+					if (this.dragObj.parentData === this.parentData) {
+						let changedIdx = this.idx / 2;
+						if (index > changedIdx) {
+							this.parentData[this.childrenAttr].splice(changedIdx, 0, this.dragObj.data)
+						} else {
+							this.parentData[this.childrenAttr].splice(changedIdx - 1, 0, this.dragObj.data)
+						}
+					} else {
+						this.parentData[this.childrenAttr].splice(this.idx / 2, 0, this.dragObj.data)
+					}
 				} else {
 					afterParent = this.data
 					// 拖入普通节点，成为其子
