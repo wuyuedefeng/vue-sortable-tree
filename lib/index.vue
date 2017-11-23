@@ -7,10 +7,10 @@
 			</slot>
 		</div>
 		<ul v-if="hasChildren(data) && (!this.closeStateKey || this.closeStateKey && !this.data[this.closeStateKey])">
-			<li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': !item['_replaceLi_'], 'blank-li': item['_replaceLi_']}">
+			<li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': !item['_replaceLi_'], 'blank-li': item['_replaceLi_']}" :key="index">
 				<sortable-tree :data="item" :attr="attr" :childrenAttr="childrenAttr" :mixinParentKey="mixinParentKey" :closeStateKey="closeStateKey" :draggable="draggable"
 				               :parentData="data" :idx="index" :dragInfo="dragInfo" @changePosition="changePosition">
-					<template scope="{item: item}">
+					<template slot-scope="{item: item}">
 						<slot :item="item">
 							<span>{{item[attr]}}</span>
 						</slot>
@@ -127,6 +127,7 @@
 				this.dragObj.vm = this.$el
 				this.dragObj.vmIdx = this.idx
 				this.dragObj.parentData = this.parentData
+				this.dragObj.pastIdx = (this.idx - 1) / 2
 			},
 			dragEnter () { // 作用在目标元素
 				this.dragObj.vm.classList.add('draging')
@@ -147,7 +148,16 @@
 				// 拖入空节点，成其兄弟（使用 splice 插入节点）
 				let afterParent = this.parentData
 				if (this.data['_replaceLi_']) {
-					this.parentData[this.childrenAttr].splice(this.idx / 2, 0, this.dragObj.data)
+					if (this.dragObj.parentData === this.parentData) {
+						let changedIdx = this.idx / 2;
+						if (index > changedIdx) {
+							this.parentData[this.childrenAttr].splice(changedIdx, 0, this.dragObj.data)
+						} else {
+							this.parentData[this.childrenAttr].splice(changedIdx - 1, 0, this.dragObj.data)
+						}
+					} else {
+						this.parentData[this.childrenAttr].splice(this.idx / 2, 0, this.dragObj.data)
+					}
 				} else {
 					afterParent = this.data
 					// 拖入普通节点，成为其子
@@ -159,7 +169,8 @@
 				this.$emit('changePosition', {
 					beforeParent: this.dragObj.parentData,
 					data: this.dragObj.data,
-					afterParent: afterParent
+					afterParent: afterParent,
+					beforeIndex: this.dragObj.pastIdx
 				})
 			},
 			dragEnd () {
