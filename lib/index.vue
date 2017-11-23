@@ -10,7 +10,9 @@
 			<li v-for="(item, index) in children" :class="{'parent-li': hasChildren(item), 'exist-li': !item['_replaceLi_'], 'blank-li': item['_replaceLi_']}" :key="index">
 				<sortable-tree :data="item" :attr="attr" :childrenAttr="childrenAttr" :mixinParentKey="mixinParentKey" :closeStateKey="closeStateKey" :draggable="draggable"
 				               :parentData="data" :idx="index" :dragInfo="dragInfo" @changePosition="changePosition">
-					<template slot-scope="{item: item}">
+					<!--slot scope only support vue 2.5+ -->
+					<!--<template slot-scope="{item: item}">-->
+					<template scope="{item: item}">
 						<slot :item="item">
 							<span>{{item[attr]}}</span>
 						</slot>
@@ -94,7 +96,7 @@
 				return this.parentData === this.dragObj.parentData && Math.abs(this.idx - this.dragObj.vmIdx) === 1
 			},
 			isMeOrMyAncestor () { // 判断被拖动节点是否为“我”自身或“我”的祖先
-//      let data = this.data
+			// let data = this.data
 				let parent = this
 				while (parent) {
 					let data = parent.data
@@ -149,7 +151,7 @@
 				let afterParent = this.parentData
 				if (this.data['_replaceLi_']) {
 					if (this.dragObj.parentData === this.parentData) {
-						let changedIdx = this.idx / 2;
+						let changedIdx = this.idx / 2
 						if (index > changedIdx) {
 							this.parentData[this.childrenAttr].splice(changedIdx, 0, this.dragObj.data)
 						} else {
