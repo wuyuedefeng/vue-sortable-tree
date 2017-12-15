@@ -6,9 +6,15 @@
  **QQ交流群:** 424580388
 
 ## Install
+vue version < 2.5 [must < 1.2.0]
 ```
-npm install vue-sortable-tree --save
+$ npm install vue-sortable-tree@1.1.0 --save
 ```
+vue version >= 2.5
+```
+$ npm install vue-sortable-tree --save
+```
+
 ### Global register
 ```javascript
 import SortableTree from 'vue-sortable-tree'
