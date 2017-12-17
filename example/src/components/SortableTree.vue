@@ -12,7 +12,7 @@
                        :parentData="data" :idx="index" :dragInfo="dragInfo" @changePosition="changePosition">
           <!--slot scope only support vue 2.5+ -->
           <!--<template slot-scope="{item: item}">-->
-          <template scope="{item: item}">
+          <template slot-scope="{item: item}">
             <slot :item="item">
               <span>{{item[attr]}}</span>
             </slot>
