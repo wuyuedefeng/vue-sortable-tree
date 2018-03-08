@@ -34,7 +34,7 @@ components: {
 ```vue
 <template>
   <sortable-tree :data="treeData">
-    <template scope="{item}">
+    <template slot-scope="{item}">
       <span>{{item.name}}</span>
     </template>
   </sortable-tree>
@@ -44,7 +44,7 @@ components: {
 ### Params
 ```vue
 <sortable-tree :data="treeData" attr="name" childrenAttr="children" mixinParentKey="$parent" @changePosition="changePosition">
-  <template scope="{item}">
+  <template slot-scope="{item}">
     <span>{{item.name}}</span>
   </template>
 </sortable-tree>

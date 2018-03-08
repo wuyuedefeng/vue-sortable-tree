@@ -132,17 +132,17 @@
         this.dragObj.pastIdx = (this.idx - 1) / 2
       },
       dragEnter () { // 作用在目标元素
-        this.dragObj.vm.classList.add('draging')
+        this.dragObj.vm && this.dragObj.vm.classList.add('draging')
         if (!this.isAllowToDrop) return
-        this.$el.classList.add('droper')
+        this.$el && this.$el.classList.add('droper')
       },
       dragLeave (data) { // 作用在目标元素
-        this.$el.classList.remove('droper')
+        this.$el && this.$el.classList.remove('droper')
       },
       // 在ondragover中一定要执行preventDefault()，否则ondrop事件不会被触发。
       drop () { // 目标元素
-        this.dragObj.vm.classList.remove('draging')
-        this.$el.classList.remove('droper')
+        this.dragObj.vm && this.dragObj.vm.classList.remove('draging')
+        this.$el && this.$el.classList.remove('droper')
         if (!this.isAllowToDrop) return
         // 无论如何都直接删除被拖动节点
         let index = this.dragObj.parentData[this.childrenAttr].indexOf(this.dragObj.data)
