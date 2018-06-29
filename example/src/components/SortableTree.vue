@@ -123,7 +123,7 @@
           return event.preventDefault()
         }
         // support firfox ..
-        event.dataTransfer.setData('text/plain', null)
+        event.dataTransfer && event.dataTransfer.setData('text/plain', null)
 
         this.dragObj.data = this.data
         this.dragObj.vm = this.$el
