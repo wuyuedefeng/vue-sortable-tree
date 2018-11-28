@@ -1,7 +1,9 @@
 # vue-sortable-tree
 [![npm](https://img.shields.io/npm/v/vue-sortable-tree.svg?style=flat-square)](https://www.npmjs.com/package/vue-sortable-tree)
 
-[Demo](http://examples.itrydo.com/vue-sortable-tree/index.html)
+[Demo Link](http://examples.itrydo.com/vue-sortable-tree/index.html)
+
+[Demo Link Source Code](https://github.com/wuyuedefeng/vue-sortable-tree/blob/master/example/src/components/Hello.vue)
 
  **QQ交流群:** 424580388
 
@@ -34,7 +36,7 @@ components: {
 ```vue
 <template>
   <sortable-tree :data="treeData">
-    <template scope="{item}">
+    <template slot-scope="{item}">
       <span>{{item.name}}</span>
     </template>
   </sortable-tree>
@@ -44,7 +46,7 @@ components: {
 ### Params
 ```vue
 <sortable-tree :data="treeData" attr="name" childrenAttr="children" mixinParentKey="$parent" @changePosition="changePosition">
-  <template scope="{item}">
+  <template slot-scope="{item}">
     <span>{{item.name}}</span>
   </template>
 </sortable-tree>
