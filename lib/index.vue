@@ -149,6 +149,8 @@
             drop () { // 目标元素
                 this.dragObj.vm && this.dragObj.vm.classList.remove('draging')
                 this.$el && this.$el.classList.remove('droper')
+                // Remove class - See flicker-blocker in style section
+                this.$el.children[0].classList.remove("flicker-blocker");
                 if (!this.isAllowToDrop) return
                 // 无论如何都直接删除被拖动节点
                 let index = this.dragObj.parentData[this.childrenAttr].indexOf(this.dragObj.data)
