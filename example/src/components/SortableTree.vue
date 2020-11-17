@@ -135,14 +135,22 @@
         this.dragObj.vm && this.dragObj.vm.classList.add('draging')
         if (!this.isAllowToDrop) return
         this.$el && this.$el.classList.add('droper')
+
+        // Add class - See flicker-blocker in style section
+        this.$el.children[0].classList.add("flicker-blocker");
       },
       dragLeave (data) { // 作用在目标元素
         this.$el && this.$el.classList.remove('droper')
+
+        // Remove class - See flicker-blocker in style section
+        this.$el.children[0].classList.remove("flicker-blocker");
       },
       // 在ondragover中一定要执行preventDefault()，否则ondrop事件不会被触发。
       drop () { // 目标元素
         this.dragObj.vm && this.dragObj.vm.classList.remove('draging')
         this.$el && this.$el.classList.remove('droper')
+        // Remove class - See flicker-blocker in style section
+        this.$el.children[0].classList.remove("flicker-blocker");
         if (!this.isAllowToDrop) return
         // 无论如何都直接删除被拖动节点
         let index = this.dragObj.parentData[this.childrenAttr].indexOf(this.dragObj.data)
@@ -287,5 +295,10 @@
   }
   .droper {
     background: lightgreen;
+  }
+
+  // Prevent dragleave firing when the drag element hover child elements in drop target. eg. span(s) in content div
+  .flicker-blocker * {
+    pointer-events: none;
   }
 </style>
